@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'));
@@ -11,22 +12,22 @@ app.use(express.json());
 
 let posts = [
     {
-        id: "1",
+        id: uuidv4(),
         username: "Suraj Kumar",
         post: "This is my first post"
     },
     {
-        id: "2",
+        id: uuidv4(),
         username: "Payal Suraj",
         post: "I Love You Suraj. This is my first post."
     },
     {
-        id: "3",
+        id: uuidv4(),
         username: "Sumit Singh",
         post: "I am a B.Com Student. I am thrird year student."
     },
     {
-        id: "4",
+        id: uuidv4(),
         username: "Chandni Singh",
         post: "MY name is chandni singh. I am a student of BCA."
     },
@@ -42,7 +43,8 @@ app.get("/posts/new", (req, res) => {
 app.post("/posts", (req, res) => {
     const { username, post } = req.body;
     console.log(req.body);
-    posts.push({ username, post });
+    let id = uuidv4();
+    posts.push({ id, username, post });
     console.log("post added successfully");
     res.redirect("/posts");
 
